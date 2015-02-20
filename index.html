@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+		<title>Pong</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<style>
+			#pong_canvas {border: 1px solid #333; margin: auto; }
+		</style>
+	</head>
+	<body>
+		<canvas id='pong_canvas' width='540' height='400'></canvas>
+
+		<script>
+			var canvas_width = 540,
+				canvas_height = 400;
+
+			var bar = {width: 55, height: 8, color: '#000', x: 0, y: 0, move_speed : 5 };
+
+			var pong = context = '';
+
+			$(document).on('ready', function() {
+				pong = document.getElementById('pong_canvas');
+				context = pong.getContext('2d');
+
+				drawBar();
+				drawBall();
+
+				$(document).on('keydown', function(e){
+
+					// if left arrow key is pressed
+					if (e.keyCode == 37) {
+
+						if (allowMove('left')) {
+							clearPong();
+							window.requestAnimationFrame(function() {
+								drawBar('left');
+							});
+						}
+
+					} else if (e.keyCode == 39) {	// if right arrow key is pressed
+						if (allowMove('right')) {
+							clearPong();
+							window.requestAnimationFrame(function() {
+								drawBar('right');
+							});
+						}
+					}
+				})
+			});
+
+			function clearPong() {
+				context.clearRect(0, 0, canvas_width, canvas_height);
+			}
+
+			function allowMove(direction) {
+				if (bar.x == (canvas_width - bar.width) && direction == 'right') {
+					return false;
+				}else if (bar.x == 0 && direction == 'left') {
+					return false;
+				} else {
+					return true;					
+				}
+			}
+
+			function drawBar(direction) {
+
+				if (direction == 'right') {
+					bar.x+=bar.move_speed;
+				}else if (direction == 'left') {
+					bar.x-=bar.move_speed;
+				}
+
+				context.fillStyle = bar.color;
+				context.fillRect(bar.x, bar.y, bar.width, bar.height);				
+				context.fillRect(bar.x, canvas_height - bar.height, bar.width, bar.height);
+			}
+		</script>
+	</body>
+</html>
