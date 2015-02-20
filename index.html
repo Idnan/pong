@@ -14,7 +14,8 @@
 			var canvas_width = 540,
 				canvas_height = 400;
 
-			var bar = {width: 55, height: 8, color: '#000', x: 0, y: 0, move_speed : 5 };
+			var bar = {width: 55, height: 8, color: '#000', x: 0, y: 0, move_speed : 5 };			
+			var ball = {x: 50, y: 50, radius: 6, color: '#000', move_speed : 5 };
 
 			var pong = context = '';
 
@@ -22,6 +23,7 @@
 				pong = document.getElementById('pong_canvas');
 				context = pong.getContext('2d');
 
+				randomizeBallPosition();
 				drawBar();
 				drawBall();
 
@@ -47,6 +49,19 @@
 					}
 				})
 			});
+
+			function randomizeBallPosition() {
+				ball.x = Math.floor(Math.random() * (canvas_width));
+				ball.y = Math.floor(Math.random() * ((canvas_height - bar.height * 2) - (bar.height + 50))) + (bar.height + 50);
+			}
+
+			function drawBall() {
+				context.fillStyle = ball.color;
+				context.beginPath();				
+				context.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2,true);
+				context.closePath();
+				context.fill();
+			}
 
 			function clearPong() {
 				context.clearRect(0, 0, canvas_width, canvas_height);
