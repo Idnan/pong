@@ -298,6 +298,8 @@ function gameOver() {
 	
 	// Show the restart button
 	restartBtn.draw();
+
+	canvas.style.cursor = 'default';
 }
 
 // Function for running the whole animation
@@ -315,6 +317,8 @@ function startScreen() {
 // On button click (Restart and start)
 function btnClick(e) {
 	
+	canvas.style.cursor = 'none';
+
 	// Variables for storing mouse position on click
 	var mx = e.pageX,
 			my = e.pageY;
